@@ -3,26 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Recipe Finder</title>
+    <title>Recipe Finder</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>Smart Recipe Finder</h1>
+        <h1>Recipe Finder</h1>
         <form id="ingredient-form">
-            <label for="ingredients">Enter ingredients you have:</label>
-            <input type="text" id="ingredients" placeholder="e.g., chicken, rice, tomatoes">
+            <label for="ingredients">Enter Ingredients (comma separated):</label><br>
+            <input type="text" id="ingredients" name="ingredients" required><br><br>
+
+            <label for="diet">Dietary Restrictions:</label>
+            <select id="diet" name="diet">
+                <option value="">None</option>
+                <option value="vegetarian">Vegetarian</option>
+                <option value="vegan">Vegan</option>
+                <option value="gluten free">Gluten Free</option>
+                <!-- Add more options as needed -->
+            </select><br><br>
+
+            <label for="cuisine">Preferred Cuisine:</label>
+            <select id="cuisine" name="cuisine">
+                <option value="">Any</option>
+                <option value="italian">Italian</option>
+                <option value="mexican">Mexican</option>
+                <option value="indian">Indian</option>
+                <!-- Add more options as needed -->
+            </select><br><br>
+
             <button type="submit">Find Recipes</button>
         </form>
-        <div id="recipes">
-            <!-- Recipes will be displayed here -->
-        </div>
-    </div>
-    <script src="api.js"></script>
-    <script src="script.js"></script>
 
-    <div class="footer">
-        <p id="footertext">Copyright © 2024 Teymur Babayev</p>
+        <div id="recipes"></div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
