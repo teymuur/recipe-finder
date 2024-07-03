@@ -16,7 +16,7 @@ document.getElementById('ingredient-form').addEventListener('submit', function(e
 
 function fetchRecipes(ingredients, diet, cuisine) {
 
-    let url = `https://api.spoonacular.com/recipes/findByIngredients?ingredients=${ingredients.join(',')}&number=10&apiKey=${apiKey}`;
+    let url = ` https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${ingredients}&apiKey=${apiKey}`;
 
     // Append dietary restriction and preferred cuisine if selected
     if (diet) {
