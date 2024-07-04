@@ -11,7 +11,7 @@
         <h1>Recipe Finder</h1>
         <form id="ingredient-form">
             <label for="ingredients">Enter Ingredients you have:</label><br>
-            <input type="text"  placeholder="e.g., chicken, rice, tomatoes" id="ingredients" name="ingredients" required><br><br>
+            <input type="text"  placeholder="e.g., chicken, rice, tomatoes" id="ingredients" name="ingredients" ><br><br>
 
             <label for="diet">Dietary Restrictions:</label>
             <select id="diet" name="diet">
@@ -23,26 +23,35 @@
             </select><br><br>
 
             <label for="cuisine">Preferred Cuisine:</label>
-
-                <select id="cuisine" name="cuisine">
-                    <option value="">Any</option>
-                    <option value="american">American</option>
-                    <option value="chinese">Chinese</option>
-                    <option value="french">French</option>
-                    <option value="indian">Indian</option>
-                    <option value="italian">Italian</option>
-                    <option value="japanese">Japanese</option>
-                    <option value="mexican">Mexican</option>
-                    <option value="mediterranean">Mediterranean</option>
-                    <option value="thai">Thai</option>
+            <select id="cuisine" name="cuisine">
+                <option value="">Any</option>
+                <option value="american">American</option>
+                <option value="chinese">Chinese</option>
+                <option value="french">French</option>
+                <option value="indian">Indian</option>
+                <option value="italian">Italian</option>
+                <option value="japanese">Japanese</option>
+                <option value="mexican">Mexican</option>
+                <option value="mediterranean">Mediterranean</option>
+                <option value="thai">Thai</option>
             </select><br><br>
 
+            <label for="calories">Calorie Range:</label><br>
+            <input type="number" min="0" placeholder="Min" id="min-calories" name="min-calories">
+            <input type="number" min="0" placeholder="Max" id="max-calories" name="max-calories"><br><br>
+
             <button type="submit">Find Recipes</button>
+            <button type="button" id="random-recipe-button">Random Recipe</button>
         </form>
 
         <div id="recipes"></div>
+        <div id="random-recipe"></div>
     </div>
+
     <script src="js/api.js"></script>
     <script src="js/script.js"></script>
+    <div class="footer">
+        <p id="footertext">Copyright © 2024 Teymur Babayev</p>
+    </div>
 </body>
 </html>

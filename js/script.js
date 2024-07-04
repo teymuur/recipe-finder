@@ -4,26 +4,38 @@ document.getElementById('ingredient-form').addEventListener('submit', function(e
     const inputElement = document.getElementById('ingredients');
     const ingredients = inputElement.value.split(',').map(ingredient => ingredient.trim().toLowerCase());
 
-    // Retrieve selected dietary restriction and preferred cuisine
+    // Retrieve selected dietary restriction, preferred cuisine, and calorie range
     const diet = document.getElementById('diet').value;
     const cuisine = document.getElementById('cuisine').value;
+    const minCalories = document.getElementById('min-calories').value;
+    const maxCalories = document.getElementById('max-calories').value;
 
-    fetchRecipes(ingredients, diet, cuisine);
+    fetchRecipes(ingredients, diet, cuisine, minCalories, maxCalories);
 
     // Keep the input value intact
-    inputElement.value = input;
+    inputElement.value = inputElement.value;
 });
 
-function fetchRecipes(ingredients, diet, cuisine) {
+document.getElementById('random-recipe-button').addEventListener('click', function() {
+    fetchRandomRecipe();
+});
 
-    let url = ` https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${ingredients}&apiKey=${apiKey}&number=10`;
+function fetchRecipes(ingredients, diet, cuisine, minCalories, maxCalories) {
+    const apiKey = 'YOUR_API_KEY'; // Replace with your Spoonacular API key
+    let url = `https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${ingredients}&apiKey=${apiKey}&number=10`;
 
-    // Append dietary restriction and preferred cuisine if selected
+    // Append dietary restriction, preferred cuisine, and calorie range if selected
     if (diet) {
         url += `&diet=${diet}`;
     }
     if (cuisine) {
         url += `&cuisine=${cuisine}`;
+    }
+    if (minCalories) {
+        url += `&minCalories=${minCalories}`;
+    }
+    if (maxCalories) {
+        url += `&maxCalories=${maxCalories}`;
     }
 
     fetch(url)
@@ -32,14 +44,15 @@ function fetchRecipes(ingredients, diet, cuisine) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
-        }).then(data => {
-                const recipes = data.results.map(item => ({
-                    id: item.id,
-                    name: item.title,
-                    image: item.image
-                }));
-                displayRecipes(recipes);
-            })
+        })
+        .then(data => {
+            const recipes = data.results.map(item => ({
+                id: item.id,
+                name: item.title,
+                image: item.image
+            }));
+            displayRecipes(recipes);
+        })
         .catch(error => console.error('Error fetching recipes:', error));
 }
 
@@ -55,7 +68,7 @@ function displayRecipes(recipes) {
     recipes.forEach(recipe => {
         const recipeDiv = document.createElement('div');
         recipeDiv.className = 'recipe';
-        
+
         const recipeName = document.createElement('h2');
         recipeName.textContent = recipe.name;
 
@@ -66,7 +79,6 @@ function displayRecipes(recipes) {
         const viewInstructionsLink = document.createElement('a');
         viewInstructionsLink.href = `instruction.html?id=${encodeURIComponent(recipe.id)}&name=${encodeURIComponent(recipe.name)}`;
         viewInstructionsLink.textContent = 'View Instructions';
-        viewInstructionsLink.target = '_blank'; // Open in a new tab
 
         recipeDiv.appendChild(recipeName);
         recipeDiv.appendChild(recipeImage);
@@ -74,4 +86,27 @@ function displayRecipes(recipes) {
 
         recipeContainer.appendChild(recipeDiv);
     });
+}
+
+function fetchRandomRecipe() {
+   
+    const url = `https://api.spoonacular.com/recipes/random?apiKey=${apiKey}`;
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const recipe = data.recipes[0];
+            const randomRecipe = [{
+                id: recipe.id,
+                name: recipe.title,
+                image: recipe.image
+            }];
+            displayRecipes(randomRecipe);
+        })
+        .catch(error => console.error('Error fetching random recipe:', error));
 }
