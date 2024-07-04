@@ -16,7 +16,7 @@ document.getElementById('ingredient-form').addEventListener('submit', function(e
 
 function fetchRecipes(ingredients, diet, cuisine) {
 
-    let url = ` https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${ingredients}&apiKey=${apiKey}`;
+    let url = ` https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${ingredients}&apiKey=${apiKey}&number=10`;
 
     // Append dietary restriction and preferred cuisine if selected
     if (diet) {
@@ -32,19 +32,14 @@ function fetchRecipes(ingredients, diet, cuisine) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             return response.json();
-        })
-        .then(data => {
-            if (!Array.isArray(data)) {
-                throw new Error('API response is not an array');
-            }
-            const recipes = data.map(item => ({
-                id: item.id,
-                name: item.title,
-                image: item.image,
-                ingredients: item.usedIngredients.map(ing => ing.name)
-            }));
-            displayRecipes(recipes);
-        })
+        }).then(data => {
+                const recipes = data.results.map(item => ({
+                    id: item.id,
+                    name: item.title,
+                    image: item.image
+                }));
+                displayRecipes(recipes);
+            })
         .catch(error => console.error('Error fetching recipes:', error));
 }
 
@@ -69,7 +64,7 @@ function displayRecipes(recipes) {
         recipeImage.alt = recipe.name;
 
         const viewInstructionsLink = document.createElement('a');
-        viewInstructionsLink.href = `instruction.html?f=${encodeURIComponent(recipe.name)}`;
+        viewInstructionsLink.href = `instruction.html?id=${encodeURIComponent(recipe.id)}&name=${encodeURIComponent(recipe.name)}`;
         viewInstructionsLink.textContent = 'View Instructions';
         viewInstructionsLink.target = '_blank'; // Open in a new tab
 
