@@ -21,7 +21,7 @@ document.getElementById('random-recipe-button').addEventListener('click', functi
 });
 
 function fetchRecipes(ingredients, diet, cuisine, minCalories, maxCalories) {
-    const apiKey = 'YOUR_API_KEY'; // Replace with your Spoonacular API key
+   
     let url = `https://api.spoonacular.com/recipes/complexSearch?includeIngredients=${ingredients}&apiKey=${apiKey}&number=10`;
 
     // Append dietary restriction, preferred cuisine, and calorie range if selected
