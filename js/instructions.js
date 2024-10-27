@@ -46,7 +46,7 @@ function displayRecipeDetails(steps) {
         if (step.ingredients.length > 0) {
             recipeContent += '<h3>Ingredients:</h3><ul>';
             step.ingredients.forEach(ingredient => {
-                recipeContent += `<li>${ingredient.name} (Image: <img src="${ingredient.image}" alt="${ingredient.name}">)</li>`;
+                recipeContent += `<li>${ingredient.name} (Image: <img src="https://img.spoonacular.com/ingredients_100x100/${ingredient.image}" alt="${ingredient.name}">)</li>`;
             });
             recipeContent += '</ul>';
         }
